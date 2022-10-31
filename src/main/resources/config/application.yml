@@ -1,0 +1,18 @@
+spring:
+  #  config:
+  #    activate:
+  #      on-profile: production
+
+  application:
+    name: demo-fe
+
+  messages:
+    encoding: UTF-8
+  thymeleaf:
+    encoding: UTF-8
+
+logging:
+  level:
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
+
+#custom.api.url.demo-api: http://localhost:8080
