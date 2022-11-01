@@ -1,7 +1,7 @@
 package com.boardfront.oscboardfrontend.controller;
 
 import com.boardfront.oscboardfrontend.dto.BoardDto;
-import com.boardfront.oscboardfrontend.entity.Board;
+
 import com.boardfront.oscboardfrontend.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import reactor.core.publisher.Flux;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,50 +29,62 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    // 전체 글 리스트 보기
+    @GetMapping("/articles") public String showAritcleList(Model model) {
+        // 1. api 가져오기
+        List<BoardDto> entireList = boardService.showArticleList();
+        // 2. model로 넘기기
+        model.addAttribute("articleList", entireList);
+        // 3. 보여줄 페이지 설정
+        return "articles/index";
+    }
+
+    // 게시글 상세 보기
+    @GetMapping(value = "/articles/{id}") public String showArticleDetail(@PathVariable Long id,
+        Model model) {
+        // 1. api 가져오기기
+        BoardDto articleDetail = boardService.receiveArticleDetail(id);
+        // 2. 가져온 데이터를 모델에 등록
+        model.addAttribute("articleDetail", articleDetail);
+        // 3. 보여줄 페이지 선택
+        return "articles/show";
+    }
+
     // 신규 게시글 작성 페이지 이동
-    @GetMapping("/articles/new")
-    public String newArticleForm() {
+    @GetMapping("/articles/new") public String moveArticleForm() {
         return "articles/new";
     }
 
-    // 전체 글 리스트 보기
-    @GetMapping("/articles")
-    public String showAritcleList(Model model) {
-
-        // 1. 출력할 리스트 DB로부터 가져오기
-        List<BoardDto> entireList = boardService.showAritcleList();
-        model.addAttribute("articleList", entireList);
-        return "index";
+    // 게시글 작성 기능
+    @PostMapping("/articles/post") public String createNewArticle(@Valid BoardDto boardDto,
+        Model model) {
+        // 1. api 가져오기
+        BoardDto newArticleData = boardService.insertNewArticle(boardDto);
+        // 2. 가져온 데이터를 모델에 등록
+        model.addAttribute("newArticle", newArticleData);
+        // 3. 전체글로 이동
+        return "redirect:/articles";
     }
 
-//    // 게시글 상세 보기
-//    @GetMapping(value = "/articles/{id}") public String read(@PathVariable Long id, Model model) {
-//        log.info("id :" + id);
-//
-//        // 1. id로 데이터 가져옴
-//        ArticleEntity articleEntity = articleRepository.findById(id).orElse(null);
-//        // 만약 해당 아이디가 없다면 null을 반환해라 .orElse(null)
-//        // java8 부터 Optional<>로 감싸도돼.
-//
-//        // 2. 가져온 데이터를 모델에 등록
-//        model.addAttribute("article", articleEntity);
-//        // 3. 보여줄 페이지 선택
-//        return "articles/show";
-//    }
-//
-//    // 전체 글 조회
-//    @GetMapping(value = "/articles") public String getAll(Model model) {
-//        // 1. 모든 Articles을 가져온다
-//        List<ArticleEntity> articleEntityList = articleRepository.findAll();
-//
-//        // 2. 가져온 Article 묶음을 리스트를 뷰로 전달할 때는 모델을 슴 뷰로 전달한다.
-//        model.addAttribute("articleList", articleEntityList);
-//
-//        // 3. 뷰 페이지를 설정
-//        return "articles/index";
-//    }
-//
-//    // 수정 폼으로 이동
+    // 수정 페이지로 이동
+    @GetMapping("/articles/edit/{id}") public String moveEditPage(@PathVariable Long id,
+        Model model) {
+        // 1. api 가져오기
+        BoardDto articleData = boardService.receiveArticleDetail(id);
+        // 2. 가져온 데이터를 모델에 등록
+        model.addAttribute("articleData", articleData);
+        // 3. 보여줄 페이지 지정.
+        return "articles/edit";
+    }
+
+}
+
+
+
+
+
+
+    //    // 수정 폼으로 이동
 //    @GetMapping(value = "articles/{id}/edit")
 //    public String edit(@PathVariable Long id, Model model) {
 //        // view pasge 설정
@@ -126,4 +143,4 @@ public class BoardController {
 //        // 3. 결과 페이지로 리다이렉트(화이트라벨 페이지 보기 싫음)
 //        return "redirect:/articles";
 //    }
-}
+

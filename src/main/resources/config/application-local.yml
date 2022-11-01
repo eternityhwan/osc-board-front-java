@@ -1,4 +1,6 @@
 server:
   port: 9099
 
-#custom.api.url.demo-api: http://localhost:8080
+custom:
+  api:
+    baseurl: localhost:8080

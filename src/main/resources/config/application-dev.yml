@@ -1,0 +1,6 @@
+server:
+  port: 9099
+
+custom:
+  api:
+    baseurl: http://ec2-3-38-111-117.ap-northeast-2.compute.amazonaws.com:32574

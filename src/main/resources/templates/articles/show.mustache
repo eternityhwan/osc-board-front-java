@@ -9,18 +9,18 @@
     </tr>
   </thead>
   <tbody class="table-group-divider">
-    {{#article}}
+    {{#articleDetail}}
     <tr>
       <th>{{id}}</th>
       <td><a href="/articles/{{id}}">{{title}}</a></td>
       <td>{{content}}</td>
     </tr>
-    {{/article}}
+    {{/articleDetail}}
   </tbody>
 </table>
 
-<a class="btn btn-primary" href="/articles/{{article.id}}/edit">Edit</a>
-<a class="btn btn-danger" href="/articles/{{article.id}}/delete">Delete</a>
+<a class="btn btn-primary" href="/articles/edit/{{articleDetail.id}}">Edit</a>
+<!--<a class="btn btn-danger" href="/articles/{{articleDetail.id}}/delete">Delete</a>-->
 <a href="/articles/new">new article</a>
 <a href="/articles">articles List</a>
 
