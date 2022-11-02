@@ -2,8 +2,11 @@ spring:
   #  config:
   #    activate:
   #      on-profile: production
-  profiles:
-    active: dev
+#  profiles:
+#    active: dev
+
+    profiles:
+      active: local
 
   application:
     name: demo-fe
