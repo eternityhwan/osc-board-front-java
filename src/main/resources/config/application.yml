@@ -13,26 +13,6 @@ spring:
   thymeleaf:
     encoding: UTF-8
 
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # AWS DB 연결용
-    url: ENC(TNWd0a695QHo3kVGfM38nx092Hx/u1n8TyDyNgP/WTWQ0h3h+HTV299JgpKKVlZn8f/NVwnXmQVN64da81lE4EGXv9qHgCRtj9/dhRlpFF+VtA+Ks8imNcaBXt5KThb0JqQuAOcoPZ4D7I+aohcWQuE1IJ5mOePolvCOMLxhYSKGn++77jdjsYwADAMWHXbZeRWoOI/CbLM=)
-    username: ENC(mNmhKjCACY10khaXSzlDPw==)
-    password: ENC(s45rHrvYh3PvvjP1mOfxszoDaiaqwDM3)
-
-    # 콘솔에 SQL 출력 여부
-    jpa:
-      show-sql: true
-      database-platform: org.hibernate.dialect.MySQL8Dialect
-      # hibernate 설정
-      database: mysql
-      hibernate.ddl-auto: update
-      hibernate.naming.strategy: org.hibernate.cfg.ImprovedNamingStrategy
-      hibernate.naming.physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-      generate-ddl: false
-      properties.hibernate.format_sql: true
-      properties.hibernate.enable_lazy_load_no_trans: true
-
 logging:
   level:
     org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG

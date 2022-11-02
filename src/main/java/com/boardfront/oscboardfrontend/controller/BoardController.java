@@ -7,12 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.*;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import reactor.core.publisher.Flux;
@@ -42,6 +39,7 @@ public class BoardController {
     // 게시글 상세 보기
     @GetMapping(value = "/articles/{id}") public String showArticleDetail(@PathVariable Long id,
         Model model) {
+        System.out.println("id상세보기 = " + id);
         // 1. api 가져오기기
         BoardDto articleDetail = boardService.receiveArticleDetail(id);
         // 2. 가져온 데이터를 모델에 등록
@@ -56,18 +54,20 @@ public class BoardController {
     }
 
     // 게시글 작성 기능
-    @PostMapping("/articles/post") public String createNewArticle(@Valid BoardDto boardDto,
+    @PostMapping("/articles/post")
+    public String createNewArticle(
+        @Valid BoardDto boardDto,
         Model model) {
-        // 1. api 가져오기
+        // 1. service에게 webclient를 사용해서 body와 api를 전송함.
         BoardDto newArticleData = boardService.insertNewArticle(boardDto);
-        // 2. 가져온 데이터를 모델에 등록
-        model.addAttribute("newArticle", newArticleData);
-        // 3. 전체글로 이동
+        // 2. 전체글로 이동
         return "redirect:/articles";
     }
 
     // 수정 페이지로 이동
-    @GetMapping("/articles/edit/{id}") public String moveEditPage(@PathVariable Long id,
+    @GetMapping("/articles/edit/{id}")
+    public String moveEditPage(
+        @PathVariable Long id,
         Model model) {
         // 1. api 가져오기
         BoardDto articleData = boardService.receiveArticleDetail(id);
@@ -77,7 +77,32 @@ public class BoardController {
         return "articles/edit";
     }
 
+    // 게시글 수정
+    @PostMapping("/articles/update")
+    public String updateArticle(
+        @Valid BoardDto boardDto,
+        Model model) {
+        // 1. api와 dto를 webclient로 넘기기
+        BoardDto updateData = boardService.updateArticle(boardDto);
+
+        // 2. 전체글로 이동 결과확인
+        return "redirect:/articles";
+    }
+
+    //게시글 삭제
+    // 디버그 기본 원인 될 곳에 sout 찍어서 확인, 앞단이 잘못인지 백이 잘못인지 확인하기.
+    @GetMapping("/articles/delete/{id}")
+    public String deleteArticle(
+        @PathVariable Long id) {
+        System.out.println("id = " + id);
+        // 1. api와 dto를 webclient로 넘기기
+        boardService.deleteDbData(id);
+
+        // 2. 전체글로 이동
+        return "redirect:/articles";
+    }
 }
+
 
 
 

@@ -1,7 +1,5 @@
 package com.boardfront.oscboardfrontend.dto;
 
-
-import com.boardfront.oscboardfrontend.entity.Article;
 import lombok.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -20,9 +18,5 @@ public class BoardDto {
 
     private String content;
 
-    public Article toEntity() {
-        return new Article(id, title, content);
-
-    }
 }
 
