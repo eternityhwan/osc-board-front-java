@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: board-front
-          image: mirrorkyh/osc-board-front:loal
+          image: mirrorkyh/osc-board-front:local
           ports:
             - name: http
               containerPort: 8080
