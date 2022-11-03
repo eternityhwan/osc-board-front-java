@@ -1,3 +1,4 @@
+# local에 설치!
 version: "3.7"
 
 services:
@@ -14,4 +15,3 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-  ~

@@ -49,15 +49,12 @@ public class BoardService {
     // 개별 글 조회
     public BoardDto receiveArticleDetail(Long id) {
 
-
-        URI juri;
-        try {
-            juri = new URI(BASE_URL);
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        return WebClient.create().get().uri(uriBuilder -> uriBuilder.scheme(juri.getScheme()).host(juri.getHost())
-                    .port(juri.getPort()).path("/api/boards/{id}").build(id)).retrieve().bodyToMono(BoardDto.class).block();
+        return WebClient.create()
+            .get()
+            .uri(BASE_URL + "/api/boards/{id}", + id)
+            .retrieve()
+            .bodyToMono(BoardDto.class)
+            .block();
     }
 
     //  수정 기능
@@ -69,7 +66,7 @@ public class BoardService {
         // 인스턴스가 너무 생긴다
 
         return WebClient.create()
-            .patch()
+            .put()
             .uri(BASE_URL + "/api/boards/{id}", boardDto.getId())
             .bodyValue(boardDto)
             .retrieve()

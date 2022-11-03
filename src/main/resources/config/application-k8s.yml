@@ -3,6 +3,6 @@ server:
 
 custom:
   api:
-    baseurl: http://board-api-svc.api
+    baseurl: http://board-api-svc.api:8080
     # 쿠버네티스 서비스를 바라보게함
     # http://(api 서비스이름).(네임스페이스이름)

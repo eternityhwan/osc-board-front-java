@@ -8,7 +8,7 @@ spring:
 #    active: aws
 
   profiles:
-    active: local
+    active: k8s
 
   application:
     name: demo-fe
