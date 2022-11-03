@@ -40,6 +40,7 @@ public class BoardService {
         //            .baseUrl(BASE_URL)
         //            .build();
 
+        // create()가 반복됨. 인스턴스 위로 올리기(인스턴스 재활용할것)
         return WebClient.create().get().uri(BASE_URL + "/api/boards").exchangeToFlux(response -> {
             return response.bodyToFlux(BoardDto.class);
         }).collectList().block();
@@ -47,6 +48,7 @@ public class BoardService {
 
     // 개별 글 조회
     public BoardDto receiveArticleDetail(Long id) {
+
 
         URI juri;
         try {
@@ -61,9 +63,14 @@ public class BoardService {
     //  수정 기능
     public BoardDto updateArticle(BoardDto boardDto) {
 
+        // 객체 생성이 자원을 많이 소모한다는 걸 알아야해.
+        // webClient bean을 만들어라 WebClientConfig 클래스를 만들어서 할 것.
+        // 인스턴스가 하나만 생긴다 리소스 효율이 좋아진다.
+        // 인스턴스가 너무 생긴다
+
         return WebClient.create()
             .patch()
-            .uri(BASE_URL + "/api/boardsR/{id}", boardDto.getId())
+            .uri(BASE_URL + "/api/boards/{id}", boardDto.getId())
             .bodyValue(boardDto)
             .retrieve()
             .bodyToMono(BoardDto.class)
@@ -78,45 +85,9 @@ public class BoardService {
         WebClient.create()
 //            .method(HttpMethod.DELETE)
             .delete()
-            .uri(BASE_URL + "/api/boardsD/" + id)
+            .uri(BASE_URL + "/api/boards/" + id)
             .retrieve()
             .bodyToMono(Void.class)
             .block();
     }
 }
-
-
-
-
-//    WebClient webClient = WebClient.builder()
-//        .baseUrl("http://ec2-3-38-111-117.ap-northeast-2.compute.amazonaws.com:32574")
-//        .build()
-//        ;
-//    List<BoardDto> fb = webClient
-//        .get()
-//        .uri("/api/boards")
-//        .exchangeToFlux(response->{
-//            System.out.println(response);
-//            return response.bodyToFlux(BoardDto.class);
-//        }).collectList().block();
-//public BoardDto bringArticle(Long id) {
-//
-//    URI juri;
-//    try {
-//        juri = new URI(BASE_URL);
-//    } catch (URISyntaxException e) {
-//        throw new RuntimeException(e);
-//    }
-//
-//    return WebClient.create()
-//        .get()
-//        .uri(uriBuilder -> uriBuilder
-//            .scheme(juri.getScheme())
-//            .host(juri.getHost())
-//            .port(juri.getPort())
-//            .path("/api/boardsR/{id}")
-//            .build(id))
-//        .retrieve()
-//        .bodyToMono(BoardDto.class)
-//        .block();
-//}

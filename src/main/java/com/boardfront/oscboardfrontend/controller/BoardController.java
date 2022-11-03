@@ -26,8 +26,15 @@ public class BoardController {
 
     private final BoardService boardService;
 
+    // 객체를 만든다는 것의 의미를 알아야한다.
+    // springbean 개념 이해.
+    // bean으로 해야하는 것과 bean으로 하지 말아야하는 것 개념 확인.
+    // 서비스 생성할 때 interface 상속 받아서 서비스 클래스 만들 것,
+    // 확장성을 확보하기 위해.
+
     // 전체 글 리스트 보기
-    @GetMapping("/articles") public String showAritcleList(Model model) {
+    @GetMapping("/articles")
+    public String showAritcleList(Model model) {
         // 1. api 가져오기
         List<BoardDto> entireList = boardService.showArticleList();
         // 2. model로 넘기기
@@ -37,7 +44,8 @@ public class BoardController {
     }
 
     // 게시글 상세 보기
-    @GetMapping(value = "/articles/{id}") public String showArticleDetail(@PathVariable Long id,
+    @GetMapping(value = "/articles/{id}")
+    public String showArticleDetail(@PathVariable Long id,
         Model model) {
         System.out.println("id상세보기 = " + id);
         // 1. api 가져오기기
@@ -49,7 +57,8 @@ public class BoardController {
     }
 
     // 신규 게시글 작성 페이지 이동
-    @GetMapping("/articles/new") public String moveArticleForm() {
+    @GetMapping("/articles/new")
+    public String moveArticleForm() {
         return "articles/new";
     }
 

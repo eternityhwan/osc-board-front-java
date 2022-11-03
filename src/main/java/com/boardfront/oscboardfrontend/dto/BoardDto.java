@@ -17,6 +17,6 @@ public class BoardDto {
     private String title;
 
     private String content;
-
+ // Dto 금지 model로 변경
 }
 

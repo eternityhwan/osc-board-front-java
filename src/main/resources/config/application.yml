@@ -2,11 +2,13 @@ spring:
   #  config:
   #    activate:
   #      on-profile: production
-#  profiles:
-#    active: dev
 
-    profiles:
-      active: local
+  # AWS 서버와 테스트
+#  profiles:
+#    active: aws
+
+  profiles:
+    active: local
 
   application:
     name: demo-fe
