@@ -5,14 +5,13 @@ metadata:
   namespace: frontend
 spec:
   rules:
-    - host: osc-board-frontend.com
+    - host: osc-board-frontend.com # host에 등록을 해줘야 작동한다
       http:
         paths:
           - backend:
               service:
                 name: board-front-svc
-                namespace: frontend
                 port:
-                  number: 8080
+                  number: 9090
             path: /
             pathType: Prefix
