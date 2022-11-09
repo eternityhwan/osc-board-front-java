@@ -1,0 +1,40 @@
+#k3d-config.yml
+apiVersion: k3d.io/v1alpha3
+kind: Simple
+name: "my-cluster"
+servers: 1
+agents: 2
+kubeAPI:
+  hostIP: 0.0.0.0
+  hostPort: 6443
+ports:
+  - port: 80:80
+    nodeFilters:
+      - loadbalancer
+  - port: 443:443
+    nodeFilters:
+      - loadbalancer
+  - port: 9000:9000
+    nodeFilters:
+      - loadbalancer
+  - port: 9700:9700
+    nodeFilters:
+      - loadbalancer
+  - port: 32180:32180
+    nodeFilters:
+      - loadbalancer
+  - port: 32181:32181
+    nodeFilters:
+      - loadbalancer
+  - port: 9090:9090
+      nodeFilters:
+        - loadbalancer
+  - port: 8080:8080
+      nodeFilters:
+        - loadbalancer
+options:
+  k3s:
+    extraArgs:
+      - arg: "--disable=traefik"
+        nodeFilters:
+          - server:

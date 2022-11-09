@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: board-front
-          image: mirrorkyh/osc-board-front:v1
+          image: mirrorkyh/osc-board-front-java:v1
           ports:
             - name: https
               containerPort: 9090

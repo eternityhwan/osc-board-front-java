@@ -6,9 +6,11 @@ spring:
   # AWS 서버와 테스트
 #  profiles:
 #    active: aws
-
+#
   profiles:
     active: k8s
+#  profiles:
+#    active: local
 
   application:
     name: demo-fe
